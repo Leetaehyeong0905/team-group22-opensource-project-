@@ -12,3 +12,6 @@ Hanjia
 
 Kim keonyoung
 게임 추천
+
+
+이미지 속에서 원(Circles)과 선(Lines)을 자동으로 검출하고 시각화하는 OpenCV 기반 웹 애플리케이션
