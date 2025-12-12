@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shape Detection Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <script>
+     function showSelectedMessage() {
+     const text = document.getElementById("selected-text");
+     text.style.visibility = "visible";
+    }
+  </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>🔍 Shape Detection Dashboard</h1>
+      <p class="subtitle">
+        이미지를 업로드하면 원(circle)과 선(line)을 검출하고, 결과를 시각화합니다.
+      </p>
+
+      <form
+        class="upload-form"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="file-wrapper">
+          <label for="image" class="file-label">
+            이미지 선택하기
+            <input
+              id="image"
+              type="file"
+              name="image"
+              accept="image/*"
+              required
+              onchange="showSelectedMessage()"
+            />
+          </label>
+
+          <p id="selected-text" class="selected-msg">
+            ✅ 이미지가 선택되었습니다
+          </p>
+        </div>
+
+        <button type="submit" class="btn">분석 시작</button>
+      </form>
+
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+
+      {% if circle_count is not none and line_count is not none %}
+      <div class="stats">
+        <div class="stat-card">
+          <span class="stat-label">원(Circles)</span>
+          <span class="stat-value">{{ circle_count }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">선(Lines)</span>
+          <span class="stat-value">{{ line_count }}</span>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if result_image %}
+      <div class="images">
+        <div class="image-card">
+          <h2>입력 이미지</h2>
+          <img src="{{ original_image }}" alt="Original Image" />
+        </div>
+        <div class="image-card">
+          <h2>검출 결과</h2>
+          <img src="{{ result_image }}" alt="Result Image" />
+          <a
+            href="{{ result_image }}"
+            download
+            class="download-link"
+            >결과 이미지 다운로드</a
+          >
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
+
+
